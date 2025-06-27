@@ -214,5 +214,63 @@
       </button>
     </form>
   </div>
+  <script>
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formFields = {
+      firstName: {
+        value: document.getElementById('firstName').value.trim(),
+        validate: (val) => val !== '',
+        error: 'First Name is required.'
+      },
+      lastName: {
+        value: document.getElementById('lastName').value.trim(),
+        validate: (val) => val !== '',
+        error: 'Last Name is required.'
+      },
+      email: {
+        value: document.getElementById('email').value.trim(),
+        validate: (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+        error: 'Please enter a valid email address.'
+      },
+      phone: {
+        value: document.getElementById('phone').value.trim(),
+        validate: (val) => /^[0-9]{10}$/.test(val),
+        error: 'Please enter a valid 10-digit phone number.'
+      },
+      zip: {
+        value: document.getElementById('zip').value.trim(),
+        validate: (val) => /^[0-9]{5}$/.test(val),
+        error: 'Please enter a valid 5-digit zip code.'
+      },
+      website: {
+        value: document.getElementById('website').value.trim(),
+        validate: (val) => /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$/.test(val),
+        error: 'Please enter a valid website URL.'
+      },
+      description: {
+        value: document.getElementById('description').value.trim(),
+        validate: (val) => val !== '',
+        error: 'Project Description is required.'
+      }
+    };
+
+    let isValid = true;
+
+    for (let key in formFields) {
+      const field = formFields[key];
+      if (!field.validate(field.value)) {
+        alert(field.error);
+        isValid = false;
+        break; // Stop at first error
+      }
+    }
+    if (isValid) {
+      alert('Form submitted successfully!');
+      document.getElementById('contactForm').reset();
+    }
+  });
+</script>
 </body>
 </html>
